@@ -1,5 +1,6 @@
 'use client';
 
+import { memo, useMemo } from 'react';
 import Image from 'next/image';
 import {
   Column1,
@@ -16,6 +17,36 @@ import { FadeUp } from '../components';
 import { useDiary, useInfiniteData } from '../hooks';
 import { formatISOToCustom } from '../utils/datetime';
 
+const COLUMN_IMAGES = [
+  Column1,
+  Column2,
+  Column3,
+  Column4,
+  Column5,
+  Column6,
+  Column7,
+  Column8,
+];
+
+const RECOMMENDED_CATEGORIES = [
+  {
+    title: 'RECOMMENDED COLUMN',
+    description: 'オススメ',
+  },
+  {
+    title: 'RECOMMENDED DIET',
+    description: 'ダイエット',
+  },
+  {
+    title: 'RECOMMENDED BEAUTY',
+    description: '美容',
+  },
+  {
+    title: 'RECOMMENDED HEALTH',
+    description: '健康',
+  },
+];
+
 export default function Note() {
   const { mutateAsync: getDiary, isPending } = useDiary();
   const { filteredData: diaryData, loadMore } = useInfiniteData({
@@ -23,48 +54,36 @@ export default function Note() {
     debounceDelay: 500,
   });
 
+  const categoryCards = useMemo(
+    () =>
+      RECOMMENDED_CATEGORIES.map((category, index) => (
+        <RecommendedCard
+          key={`category-${index}`}
+          category={category}
+          index={index}
+        />
+      )),
+    []
+  );
+
+  const diaryItems = useMemo(
+    () =>
+      diaryData.map((item, index) => (
+        <NoteItem key={`diary-${item.id || index}`} item={item} index={index} />
+      )),
+    [diaryData]
+  );
+
   return (
     <FadeUp className="flex flex-col gap-5">
       <div />
       <div />
       <div className="container-tablet px-4 sm:px-0 flex flex-col gap-5 justify-between">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-5">
-          {[
-            {
-              title: 'RECOMMENDED COLUMN',
-              description: 'オススメ',
-            },
-            {
-              title: 'RECOMMENDED DIET',
-              description: 'ダイエット',
-            },
-            {
-              title: 'RECOMMENDED BEAUTY',
-              description: '美容',
-            },
-            {
-              title: 'RECOMMENDED HEALTH',
-              description: '健康',
-            },
-          ].map((_, index) => (
-            <div
-              className="bg-gray-600 p-5 h-[140px] text-center content-center"
-              key={index}
-            >
-              <h1 className="text-primary-300 font-inter text-[22px]/[27px] max-md:text-sm max-sm:text-xs tracking-[0.11px] text-center">
-                RECOMMENDED COLUMN
-              </h1>
-              <p className="border border-white max-w-[56px] mx-auto my-1.5" />
-              <p className="text-white font-noto-sans-jp text-lg/[26px] ">
-                オススメ
-              </p>
-            </div>
-          ))}
+          {categoryCards}
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-4 sm:mt-0 max-h-[700px] overflow-auto">
-          {diaryData.map((item, index) => (
-            <Item key={index} item={item} index={index} />
-          ))}
+          {diaryItems}
         </div>
         <div className="text-center mt-6 sm:mt-0">
           <Button
@@ -80,7 +99,31 @@ export default function Note() {
   );
 }
 
-const Item = ({ item, index }: { item: Diary; index: number }) => {
+const RecommendedCard = memo(
+  ({
+    category,
+    index: _index,
+  }: {
+    category: { title: string; description: string };
+    index: number;
+  }) => {
+    return (
+      <div className="bg-gray-600 p-5 h-[140px] text-center content-center">
+        <h1 className="text-primary-300 font-inter text-[22px]/[27px] max-md:text-sm max-sm:text-xs tracking-[0.11px] text-center">
+          {category.title}
+        </h1>
+        <p className="border border-white max-w-[56px] mx-auto my-1.5" />
+        <p className="text-white font-noto-sans-jp text-lg/[26px]">
+          {category.description}
+        </p>
+      </div>
+    );
+  }
+);
+
+const NoteItem = memo(({ item, index }: { item: Diary; index: number }) => {
+  const imageSource = useMemo(() => COLUMN_IMAGES[index % 8], [index]);
+
   return (
     <div>
       <div
@@ -90,23 +133,7 @@ const Item = ({ item, index }: { item: Diary; index: number }) => {
         data-aos-offset={-10000000}
         data-aos-once="true"
       >
-        <Image
-          src={
-            [
-              Column1,
-              Column2,
-              Column3,
-              Column4,
-              Column5,
-              Column6,
-              Column7,
-              Column8,
-            ][index % 8]
-          }
-          alt={item.label}
-          fill
-          objectFit="cover"
-        />
+        <Image src={imageSource} alt={item.label} fill objectFit="cover" />
         <p className="bg-primary-300 text-white text-xs sm:text-mb font-inter leading-tight sm:leading-[18px] tracking-wider-2 absolute bottom-0 left-0 py-1.5 px-2 sm:py-2 sm:px-3">
           {formatISOToCustom(item.createdAt, 'yyyy.MM.dd HH:mm')}
         </p>
@@ -119,4 +146,4 @@ const Item = ({ item, index }: { item: Diary; index: number }) => {
       </p>
     </div>
   );
-};
+});
