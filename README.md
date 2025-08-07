@@ -83,47 +83,51 @@ npm run start
 
 
 ## 📁 Project Structure
-├── app/ # Next.js App Router
-│ ├── api/ # API routes
-│ ├── challenge/ # Challenge page
-│ ├── note/ # Notes page
-│ └── layout.tsx # Root layout
+
+```
+├── app/                    # Next.js App Router
+│   ├── api/               # API routes
+│   ├── challenge/         # Challenge page
+│   ├── note/              # Notes page
+│   └── layout.tsx         # Root layout
 ├── src/
-│ ├── @types/ # TypeScript type definitions
-│ │ ├── env.d.ts
-│ │ ├── mockapi.d.ts
-│ │ └── ...
-│ ├── components/ # Reusable UI components
-│ │ ├── Header/
-│ │ ├── LineChart/
-│ │ ├── RingProgress/
-│ │ ├── loading/
-│ │ └── ui/
-│ ├── constants/ # App constants and fake data
-│ │ ├── fakeData.tsx
-│ │ └── index.tsx
-│ ├── global/ # Global styles and themes
-│ │ ├── base.css
-│ │ ├── theme.css
-│ │ └── utilities.css
-│ ├── hooks/ # Custom React hooks
-│ │ ├── usePaginatedData.ts
-│ │ ├── useProfile.tsx
-│ │ └── useDiary.tsx
-│ ├── providers/ # Context providers
-│ │ ├── AOSProvider.tsx
-│ │ └── tanstack-providers.tsx
-│ ├── screens/ # Page components
-│ │ ├── home.tsx
-│ │ ├── challenge.tsx
-│ │ └── note.tsx
-│ └── utils/ # Utility functions
-│ ├── cn.ts
-│ ├── datetime.ts
-│ └── localStorage.ts
-├── public/ # Static assets
-│ ├── images/
-│ └── svgs/
+│   ├── @types/            # TypeScript type definitions
+│   │   ├── env.d.ts
+│   │   ├── mockapi.d.ts
+│   │   └── ...
+│   ├── components/        # Reusable UI components
+│   │   ├── Header/
+│   │   ├── lineChart/
+│   │   ├── ringProgress/
+│   │   ├── loading/
+│   │   └── ...
+│   ├── constants/         # App constants and fake data
+│   │   ├── fakeDate.tsx
+│   │   └── enum.tsx
+│   ├── global/            # Global styles and themes
+│   │   ├── base.css
+│   │   ├── theme.css
+│   │   └── utilities.css
+│   ├── hooks/             # Custom React hooks
+│   │   ├── usePaginatedData.ts
+│   │   ├── useProfile.tsx
+│   │   └── useDiary.tsx
+│   ├── providers/         # Context providers
+│   │   ├── AOSProvider.tsx
+│   │   └── tanstack-providers.tsx
+│   ├── screens/           # Page components
+│   │   ├── home.tsx
+│   │   ├── challenge.tsx
+│   │   └── note.tsx
+│   └── utils/             # Utility functions
+│       ├── cn.ts
+│       ├── datetime.ts
+│       └── helper.tsx
+├── public/                # Static assets
+│   ├── images/
+│   └── svgs/
+
+```
 
 ## 🌐 Mock API Integration
 
