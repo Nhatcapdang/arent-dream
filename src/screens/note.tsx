@@ -11,9 +11,9 @@ import {
   Column7,
   Column8,
 } from '@/public/images';
+import Button from '../common/button';
 import { FadeUp } from '../components';
 import { useDiary, useInfiniteData } from '../hooks';
-import { cn } from '../utils/cn';
 import { formatISOToCustom } from '../utils/datetime';
 
 export default function Note() {
@@ -67,18 +67,11 @@ export default function Note() {
           ))}
         </div>
         <div className="text-center mt-6 sm:mt-0">
-          <button
-            onClick={loadMore}
-            type="button"
-            className={cn(
-              'primary-gradient text-white text-base sm:text-lg font-noto-sans-jp leading-relaxed sm:leading-[26px] max-w-[296px] w-full h-12 sm:h-[56px] rounded-[5px] cursor-pointer active:translate-y-2 transition-all duration-100',
-              {
-                'opacity-50 cursor-not-allowed': isPending,
-              }
-            )}
-          >
-            コラムをもっと見る
-          </button>
+          <Button
+            label="コラムをもっと見る"
+            isPending={isPending}
+            loadMore={loadMore}
+          />
         </div>
       </div>
       <div />

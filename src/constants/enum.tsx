@@ -4,3 +4,9 @@ export enum ProfileType {
   DINNER = 'Dinner',
   SNACK = 'Snack',
 }
+
+export enum TABS {
+  BODY_RECORD = 'BodyRecord',
+  MY_EXERCISE = 'MyExercise',
+  MY_DIARY = 'MyDiary',
+}

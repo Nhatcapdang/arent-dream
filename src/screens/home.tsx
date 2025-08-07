@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { D01 } from '@/public/images';
 import Svgs from '@/public/svgs';
+import Button from '../common/button';
 import { FadeUp, LineChart, RingProgress } from '../components';
 import { ProfileType } from '../constants/enum';
 import { data } from '../constants/fakeDate';
@@ -43,6 +44,7 @@ const chartData = {
     },
   ],
 };
+
 export default function Home() {
   const { mutateAsync: getProfile, isPending } = useProfile();
 
@@ -117,27 +119,18 @@ export default function Home() {
             <Item key={index} item={item} index={index} />
           ))}
         </div>
-        <div className="text-center mt-6 sm:mt-0">
-          <button
-            onClick={loadMore}
-            type="button"
-            className="primary-gradient text-white text-base sm:text-lg font-noto-sans-jp leading-relaxed sm:leading-[26px] max-w-[296px] w-full h-12 sm:h-[56px] rounded-[5px] cursor-pointer active:translate-y-2 transition-all duration-100"
-          >
-            記録をもっと見る
-          </button>
+        <div className=" mt-6 sm:mt-0 flex gap-2 justify-center">
+          <Button
+            label="記録をもっと見る"
+            isPending={isPending}
+            loadMore={loadMore}
+          />
           {isFiltered && (
-            <button
-              onClick={clearFilter}
-              type="button"
-              className={cn(
-                'primary-gradient text-white text-base sm:text-lg font-noto-sans-jp leading-relaxed sm:leading-[26px] max-w-[296px] w-full h-12 sm:h-[56px] rounded-[5px] cursor-pointer active:translate-y-2 transition-all duration-100 ml-5',
-                {
-                  'opacity-50 cursor-not-allowed': isPending,
-                }
-              )}
-            >
-              Reset
-            </button>
+            <Button
+              label="Reset"
+              isPending={isPending}
+              loadMore={clearFilter}
+            />
           )}
         </div>
       </div>

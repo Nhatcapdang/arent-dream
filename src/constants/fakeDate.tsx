@@ -1,23 +1,4 @@
 import { ChartData } from 'chart.js';
-import { MyRecommend1, MyRecommend2, MyRecommend3 } from '@/public/images';
-
-export const DATA = [
-  {
-    title: 'BODY RECORD',
-    description: '自分のカラダの記録',
-    image: MyRecommend1,
-  },
-  {
-    title: 'MY EXERCISE',
-    description: '自分の運動の記録',
-    image: MyRecommend2,
-  },
-  {
-    title: 'MY DIARY',
-    description: '自分の日記',
-    image: MyRecommend3,
-  },
-];
 
 export const data: ChartData<'line'> = {
   labels: [
