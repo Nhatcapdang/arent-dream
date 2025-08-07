@@ -2,6 +2,20 @@
 - The "Hiragino Kaku Gothic Pro" font is available at "@https://www.screen.co.jp/ga_product/sento/downloads.html," but I'm not sure how to use it. I've tried downloading the font from the website, but I'm unable to see anything with extensions .Woff.
 I therefore choose to utilize Noto Sans JP rather than "Hiragino Kaku Gothic Pro."
 
+## 🚦 My Record
+
+- CLick button to move to each entry screen with Tabs
+
+## 🚦Top Pagem, 
+- Button to transit to input
+
+
+## 🚦 Top Pagem, My Record, Column page
+- Have load 10 item when click button with usePaginatedData hook
+
+
+- CLick button to move to each entry screen with Tabs
+
 ## 🚦 Getting Started
 
 ### Prerequisites

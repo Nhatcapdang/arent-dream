@@ -1,4 +1,5 @@
 import { ChartData } from 'chart.js';
+import { generateRandomData } from '../utils/helper';
 
 export const data: ChartData<'line'> = {
   labels: [
@@ -39,6 +40,20 @@ export const data: ChartData<'line'> = {
       pointBackgroundColor: '#8FE9D0',
       pointRadius: 6,
       pointHoverRadius: 8,
+    },
+  ],
+};
+
+export const DATA_CHART: ChartData<'line'> = {
+  ...data,
+  datasets: [
+    {
+      ...data.datasets[0],
+      data: generateRandomData(),
+    },
+    {
+      ...data.datasets[1],
+      data: generateRandomData(),
     },
   ],
 };

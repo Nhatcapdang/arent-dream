@@ -7,11 +7,10 @@ import Button from '../common/button';
 import Tabs from '../common/tabs';
 import { FadeUp, LineChart } from '../components';
 import { TABS } from '../constants/enum';
-import { data } from '../constants/fakeDate';
-import { useDiary, useInfiniteData } from '../hooks';
+import { DATA_CHART } from '../constants/fakeDate';
+import { useChartData, useDiary, useInfiniteData } from '../hooks';
 import { cn } from '../utils/cn';
 import { formatISOToCustom } from '../utils/datetime';
-import { generateRandomData } from '../utils/helper';
 
 export default function Challenge() {
   return (
@@ -119,20 +118,7 @@ const Exercise = () => {
 
 const BodyRecord = () => {
   const [selected, setSelected] = useState<number>(0);
-
-  const chartData = {
-    ...data,
-    datasets: [
-      {
-        ...data.datasets[0],
-        data: generateRandomData(),
-      },
-      {
-        ...data.datasets[1],
-        data: generateRandomData(),
-      },
-    ],
-  };
+  const { chartData, regenerateData } = useChartData(DATA_CHART);
 
   return (
     <div className="bg-gray-600  p-5">
@@ -156,7 +142,10 @@ const BodyRecord = () => {
                 'text-white bg-primary-300': selected === index,
               }
             )}
-            onClick={() => setSelected(index)}
+            onClick={() => {
+              setSelected(index);
+              regenerateData();
+            }}
           >
             {label}
           </button>

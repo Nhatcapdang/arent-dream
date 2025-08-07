@@ -1,16 +1,17 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import { D01 } from '@/public/images';
 import Svgs from '@/public/svgs';
 import Button from '../common/button';
 import { FadeUp, LineChart, RingProgress } from '../components';
 import { ProfileType } from '../constants/enum';
-import { data } from '../constants/fakeDate';
+import { DATA_CHART } from '../constants/fakeDate';
 import { useInfiniteData, useProfile } from '../hooks';
+import { useChartData } from '../hooks/useChartData';
 import { cn } from '../utils/cn';
 import { formatISOToCustom } from '../utils/datetime';
-import { generateRandomData } from '../utils/helper';
 
 const DATA = [
   {
@@ -31,22 +32,10 @@ const DATA = [
   },
 ];
 
-const chartData = {
-  ...data,
-  datasets: [
-    {
-      ...data.datasets[0],
-      data: generateRandomData(),
-    },
-    {
-      ...data.datasets[1],
-      data: generateRandomData(),
-    },
-  ],
-};
-
 export default function Home() {
   const { mutateAsync: getProfile, isPending } = useProfile();
+  const { chartData, regenerateData } = useChartData(DATA_CHART);
+  const [ringProgress, setRingProgress] = useState<number>(75);
 
   const {
     filteredData: profileData,
@@ -77,7 +66,7 @@ export default function Home() {
         >
           <Image src={D01} alt="D01" fill objectFit="cover" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            <RingProgress percentage={75} size={180} strokeWidth={1}>
+            <RingProgress percentage={ringProgress} size={180} strokeWidth={1}>
               {(percentage) => (
                 <div>
                   <p className="text-white font-inter drop-shadow-lg">
@@ -103,7 +92,11 @@ export default function Home() {
                 clipPath:
                   'polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
               }}
-              onClick={() => filterData(item.title)}
+              onClick={() => {
+                filterData(item.title);
+                regenerateData();
+                setRingProgress(Math.floor(Math.random() * 100));
+              }}
             >
               <div className="flex flex-col items-center justify-center gap-1">
                 <div className="scale-75 sm:scale-100">{item.icon}</div>
